@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>代码清单32-1 使用XMLHttpRequest对象</title>
+</head>
+<body>
+	
+	<div>
+		<button>apples</button>
+		<button>lemons</button>
+		<button>bananas</button>
+	</div>
+	<div id="target">
+		press a button
+	</div>
+
+	<script>
+		
+		var buttons = document.getElementsByTagName("button");
+		for(var i = 0; i < buttons.length; i++){
+			buttons[i].onclick = handleButtonPress;
+		}
+		//var httpRequest;
+
+		function handleButtonPress(e){
+			var httpRequest = new XMLHttpRequest();
+
+			httpRequest.onreadystatechange = handleResponse;
+			httpRequest.open("POST",e.target.innerHTML + ".html",true);
+			httpRequest.send();
+		};
+
+		function handleResponse(e){
+			if(e.target.readyState == 4 && e.target.status == 200){
+				document.getElementById("target").innerHTML = e.target.responseText;
+			}else{
+				alert(e.target.status)
+			}
+		};
+
+	</script>
+
+</body>
+</html>
